@@ -69,6 +69,12 @@ rankingScore = clearWave * 100000000 + battleScore
 - `DEBUG=true` のときだけ、ランキング送信失敗時に RPC 名、HTTP ステータス、エラー本文先頭、`game_slug`、送信 score、名前有無を console と debug 表示に出すようにしました。`DEBUG=false` では従来通り短いユーザー向け文言だけです。
 - 維持した仕様: `index.html` 1 ファイル構成、ゲーム名「うちかえる」、`game_slug=uchikaeru`、公開 URL、60 波クリア目標、40 武器、3 枚候補、敵 80 体・弾 120 発・エフェクト 120 個上限、RESULT 後のランキング自動 1 回送信、ランキング登録ボタンなし、`submit_score` / `get_best_score_ranking`、`rankingScore = clearWave * 100000000 + battleScore`、Publishable key のみ、`public.scores` 不使用。
 
+- Canvas内の主要位置を `getBattleLayout(cw, ch)` に集約し、城、防衛ライン、武器スロット、罠帯、拠点HPバーの基準を統一しました。
+- 武器スロットの描画位置と弾の発射位置を同じ座標にそろえ、発射位置が上にずれて見える問題を修正しました。
+- 防衛ラインの描画位置と敵の侵入判定位置を同じ `layout.defenseLineY` にそろえました。
+- ヒット演出、爆発演出、ダメージ文字の表示位置を見直し、敵や拠点から不自然に離れないようにしました。
+- 今回は座標ずれ修正のみを目的とし、敵HP、武器火力、敵出現、スコア、ランキング仕様は変更していません。
+
 ## 動作確認観点
 
 - ホーム、ルール、名前入力、カウントダウン、初回武器選択、プレイ、波クリア後カード選択、結果画面へ進めること。
