@@ -63,6 +63,7 @@ rankingScore = clearWave * 100000000 + battleScore
 - Supabase URL と Publishable key を設定し、独自 RPC 名から共通 RPC 名へ修正しました。
 - DOM の id 自動グローバル参照に頼らず、`document.getElementById()` で明示的に取得するようにしました。
 - ゲーム画面を表示してから次フレームで Canvas サイズを取得するようにしました。
+- `READY` / `PLAYING` / `CHOOSING` が同じゲーム画面を共有しても、画面切り替えで非表示に戻らないようにしました。
 - 「他のゲームで遊ぶ」リンクを実験場 URL に合わせました。
 
 ## 動作確認観点
