@@ -56,6 +56,7 @@ rankingScore = clearWave * 100000000 + battleScore
 
 ## 今回の修正内容
 
+- カエルの実体力を `FROG_HP_MULTIPLIER = 5` で 5 倍にしました。`ENEMY_DEFS` の個別 HP、score、damage、speed、ランキング仕様、拠点体力、武器火力、敵 80 体・弾 120 発・エフェクト 120 個上限は維持しています。
 - `.screen` と `.game-wrap` の表示制御を整理し、`HOME` / `RULE` / `NAME` / `READY` / `PLAYING` / `CHOOSING` / `RESULT` / `ERROR` のうち 1 画面だけが active になるようにしました。`RESULT` 遷移時はスクロール位置も先頭に戻します。
 - `.app` と `#game` を `100dvh` 内に収め、HUD、Canvas、状態表示、武器チップ、カード候補がスマホ 1 画面内で収まるように高さ設計を見直しました。カード選択欄は内部スクロールにし、結果画面がゲーム画面下に続かない構成です。
 - 攻撃起点を画面中央下の 1 点から、拠点周辺に並ぶ最大 6 個の武器スロットへ変更しました。Canvas 上に台座、絵文字、Lv を描画し、弾は各武器スロットから発射されます。
