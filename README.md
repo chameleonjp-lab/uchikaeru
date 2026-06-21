@@ -34,7 +34,7 @@ npm、Vite、外部ビルド、複数ファイル化は使わず、`index.html` 
 rankingScore = clearWave * 10000000 + min(9999999, battleScore)
 ```
 
-Supabase `game_scores` の `integer` 上限に収めるため、内部基数は `10000000` です。`battleScore` は `RANK_BASE - 1` 以下に丸め、60 波クリア時でも `609999999` 以下になるようにします。画面表示やシェア文では巨大な送信値をそのまま出さず、必ず次の形式に分解します。
+Supabase `game_scores` の `integer` 上限に収めるため、内部基数は `10000000` です。`battleScore` は `RANK_BASE - 1` 以下に丸め、さらに送信直前の `p_score` も 0 以上の PostgreSQL `integer` 範囲内に正規化することで、60 波クリア時でも `609999999` 以下になるようにします。画面表示やシェア文では巨大な送信値をそのまま出さず、必ず次の形式に分解します。
 
 ```text
 ○波クリア / ○○点
@@ -57,7 +57,7 @@ Supabase `game_scores` の `integer` 上限に収めるため、内部基数は 
 ## 今回の修正内容
 
 - Supabase `game_scores` の integer 上限に収めるため、ランキング内部スコアの基数を `100000000` から `10000000` に変更しました。
-- `battleScore` は `RANK_BASE - 1` 以下に丸め、60 波クリア時でも integer 上限を超えないようにしました。
+- `battleScore` は `RANK_BASE - 1` 以下に丸め、送信値も 0 以上の integer 範囲に正規化し、60 波クリア時でも integer 上限を超えないようにしました。
 - 結果画面にホームへ戻るボタンを追加しました。
 - 結果画面にベストランキング上位 10 件を表示するエリアを追加しました。
 - リタイア時も `submit_score` を呼び、プレイ回数に計測されるようにしました。
