@@ -31,16 +31,16 @@ npm、Vite、外部ビルド、複数ファイル化は使わず、`index.html` 
 送信値は波数を最優先するため、次の整数を使います。
 
 ```text
-rankingScore = clearWave * 10000000 + min(9999999, battleScore)
+rankingScore = clearWave * 1000000 + min(999999, battleScore)
 ```
 
-Supabase `game_scores` の `integer` 上限に収めるため、内部基数は `10000000` です。`battleScore` は `RANK_BASE - 1` 以下に丸め、さらに送信直前の `p_score` も 0 以上の PostgreSQL `integer` 範囲内に正規化することで、60 波クリア時でも `609999999` 以下になるようにします。画面表示やシェア文では巨大な送信値をそのまま出さず、必ず次の形式に分解します。
+Supabase `submit_score` の実測で `p_score = 390,601,917` は `score is too large` となり、`p_score = 39,601,917` と `60,999,999` は `accepted=true` で通ることを確認しました。そのため、ランキング内部スコアの基数は `1,000,000` に確定しました。`battleScore` は最大 `999,999` に丸め、さらに送信直前の `p_score` も 0 以上の PostgreSQL `integer` 範囲内に正規化します。60 波クリア時の最大送信値は `60,999,999` です。画面表示やシェア文では送信値をそのまま出さず、必ず次の形式に分解します。
 
 ```text
 ○波クリア / ○○点
 ```
 
-0 波クリア、敗北、リタイア、60 波クリアのいずれでも同じ形式で表示します。リタイア時も `submit_score` を呼び、0 波リタイアでも `0波クリア / 0点` として送信して `play_count` に計測します。
+0 波クリア、敗北、リタイア、60 波クリアのいずれでも同じ形式で表示します。たとえば、39 波クリアで `battleScore = 601,917` の場合は `rankingScore = 39,601,917`、表示は `39波クリア / 601,917点` です。60 波クリアで `battleScore = 2,037,256` の場合は `battleScore` を `999,999` に丸め、`rankingScore = 60,999,999`、表示は `60波クリア / 999,999点` です。リタイア時も `submit_score` を呼び、0 波リタイアでも `0波クリア / 0点` として送信して `play_count` に計測します。
 
 ## Supabase 連携仕様
 
@@ -56,8 +56,8 @@ Supabase `game_scores` の `integer` 上限に収めるため、内部基数は 
 
 ## 今回の修正内容
 
-- Supabase `game_scores` の integer 上限に収めるため、ランキング内部スコアの基数を `100000000` から `10000000` に変更しました。
-- `battleScore` は `RANK_BASE - 1` 以下に丸め、送信値も 0 以上の integer 範囲に正規化し、60 波クリア時でも integer 上限を超えないようにしました。
+- Supabase `submit_score` の独自上限に収めるため、ランキング内部スコアの基数を `1,000,000` に確定しました。
+- `battleScore` は最大 `999,999` に丸め、60 波クリア時の最大送信値が `60,999,999` になるようにしました。
 - 結果画面にホームへ戻るボタンを追加しました。
 - 結果画面にベストランキング上位 10 件を表示するエリアを追加しました。
 - リタイア時も `submit_score` を呼び、プレイ回数に計測されるようにしました。
@@ -74,7 +74,7 @@ Supabase `game_scores` の `integer` 上限に収めるため、内部基数は 
 - 下部の武器チップは長い武器名ではなく `絵文字 Lv` 表示にして、スマホ幅でも現在の構成を読みやすくしました。
 - 60 波クリア、拠点突破、リタイアの直前に状態文を更新し、結果画面へ移る前の状態と結果が矛盾しにくいようにしました。
 - `DEBUG=true` のときだけ、ランキング送信失敗時に RPC 名、HTTP ステータス、エラー本文先頭、`game_slug`、送信 score、名前有無を console と debug 表示に出すようにしました。`DEBUG=false` では従来通り短いユーザー向け文言だけです。
-- 維持した仕様: `index.html` 1 ファイル構成、ゲーム名「うちかえる」、`game_slug=uchikaeru`、公開 URL、60 波クリア目標、40 武器、3 枚候補、敵 80 体・弾 120 発・エフェクト 120 個上限、RESULT 後のランキング自動 1 回送信、ランキング登録ボタンなし、`submit_score` / `get_best_score_ranking`、`rankingScore = clearWave * 10000000 + min(9999999, battleScore)`、Publishable key のみ、`public.scores` 不使用。
+- 維持した仕様: `index.html` 1 ファイル構成、ゲーム名「うちかえる」、`game_slug=uchikaeru`、公開 URL、60 波クリア目標、40 武器、3 枚候補、敵 80 体・弾 120 発・エフェクト 120 個上限、RESULT 後のランキング自動 1 回送信、ランキング登録ボタンなし、`submit_score` / `get_best_score_ranking`、`rankingScore = clearWave * 1000000 + min(999999, battleScore)`、Publishable key のみ、`public.scores` 不使用。
 
 - 拠点ダメージ判定ラインを、画面に見えている赤い防衛ラインと同じ `layout.defenseLineY` に統一しました。
 - 拠点ダメージ文字は赤い線のすぐ上に出るよう修正しました。
