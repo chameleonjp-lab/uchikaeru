@@ -10,12 +10,69 @@
 </head>
 <body>
 <div class="app">
-<section id="home" class="screen stack active panel center"><div class="frogline" aria-hidden="true"><span class="l">🐸</span><span class="mid">🐸</span><span class="r">🐸</span></div><h1 class="title" tabindex="-1">うちかえる</h1><p class="lead">迫るカエルの大群を撃ち返し、ランダム武器を選びながら60波突破を目指す防衛ゲームです。</p><button id="startBtn" class="btn">ゲーム開始</button><button id="ruleBtn" class="btn secondary">ルール説明</button><button id="shareHomeBtn" class="btn secondary">ゲームをシェア</button><a class="btn secondary" href="https://chameleonjp-lab.github.io/chameleonjp_lab/" role="button">他のゲームで遊ぶ</a></section>
+<section id="home" class="screen stack active panel center"><div class="frogline" aria-hidden="true"><span class="l">🐸</span><span class="mid">🐸</span><span class="r">🐸</span></div><h1 class="title" tabindex="-1">うちかえる</h1><p class="lead">迫るカエルの大群を撃ち返し、ランダム武器を選びながら60波突破を目指す防衛ゲームです。</p><button id="startBtn" class="btn">ゲーム開始</button><button id="ruleBtn" class="btn secondary">ルール説明</button><button id="shareHomeBtn" class="btn secondary common-x-share">Xでシェア</button><a class="common-ranking-link" href="https://chameleonjp-lab.github.io/chameleonjp_lab/ranking.html?game=uchikaeru">ランキング</a><a class="btn secondary" href="https://chameleonjp-lab.github.io/chameleonjp_lab/" role="button">他のゲームで遊ぶ</a></section>
 <section id="rule" class="screen stack panel"><h2 tabindex="-1">ルール説明</h2><ol class="rules"><li>画面上側から迫るカエルを拠点の自動攻撃で撃退します。</li><li>全60波クリアを目指します。途中で拠点体力が0になると敗北です。</li><li>各波のあとに3枚の候補から武器・強化を1つ選びます。</li><li>30波以降は、範囲・単体火力・遅延・貫通・継続火力・罠と強化カードの組み合わせが重要です。</li><li>結果はゲーム終了時に自動でランキング送信されます。</li></ol><button id="ruleStartBtn" class="btn">名前入力へ</button><button id="ruleBackBtn" class="btn secondary">戻る</button></section>
 <section id="name" class="screen stack panel"><h2 tabindex="-1">名前入力</h2><p class="small">ランキングに表示する名前を1〜10文字で入力してください。空欄では開始できません。</p><input id="nameInput" class="name-input" maxlength="10" autocomplete="nickname" enterkeyhint="done" placeholder="なまえ"><button id="nameStartBtn" class="btn">開始する</button><button id="nameBackBtn" class="btn secondary">戻る</button></section>
 <section id="game" class="screen game-wrap"><div class="hud"><span id="waveHud">波 1/60</span><span id="hpHud">拠点 20</span><span id="scoreHud">0点</span></div><div class="canvas-shell"><canvas id="gameCanvas" role="img" aria-label="ゲーム画面"></canvas><button id="retireBtn" class="retire-btn" type="button" aria-label="リタイア">⏹ リタイア</button><button id="speedBtn" class="speed-toggle" type="button" aria-pressed="false" aria-label="再生速度を切り替え">▶ ×1</button></div><div id="statusText" class="status" role="status" aria-live="polite">準備中...</div><div id="weaponList" class="weapons" aria-label="装備中の武器"></div><div id="cards" class="cards"></div></section>
-<section id="result" class="screen stack panel center"><h2 id="resultTitle" tabindex="-1">結果</h2><div id="resultScore" class="result-score">0波クリア / 0点</div><p id="rankingStatus" class="small">ランキング送信準備中...</p><button id="resendBtn" class="btn secondary" type="button" style="display:none">ランキングを再送信</button><div id="ranking" class="ranking" aria-live="polite"></div><button id="againBtn" class="btn">もう一度</button><button id="homeResultBtn" class="btn secondary">ホームに戻る</button><button id="shareResultBtn" class="btn secondary">結果をシェア</button><a class="btn secondary" href="https://chameleonjp-lab.github.io/chameleonjp_lab/" role="button">他のゲームで遊ぶ</a></section>
+<section id="result" class="screen stack panel center"><h2 id="resultTitle" tabindex="-1">結果</h2><div id="resultScore" class="result-score">0波クリア / 0点</div><p id="rankingStatus" class="small">ランキング送信準備中...</p><button id="resendBtn" class="btn secondary" type="button" style="display:none">ランキングを再送信</button><div id="ranking" class="ranking" aria-live="polite"></div><button id="againBtn" class="btn">もう一度</button><button id="homeResultBtn" class="btn secondary">ホームに戻る</button><button id="shareResultBtn" class="btn secondary common-x-share">Xでシェア</button><a class="common-ranking-link" href="https://chameleonjp-lab.github.io/chameleonjp_lab/ranking.html?game=uchikaeru">ランキング</a><a class="btn secondary" href="https://chameleonjp-lab.github.io/chameleonjp_lab/" role="button">他のゲームで遊ぶ</a></section>
 </div><div id="toast" class="toast" role="status" aria-live="polite"></div><div id="debug" class="debug"></div>
+<style>
+button.common-x-share { background:#000 !important; color:#fff !important; border:1px solid #555; white-space:normal; overflow-wrap:anywhere; min-height:44px; padding:12px 16px; line-height:1.4; }
+.common-ranking-link { display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box; min-height:44px; padding:12px 16px; border:1px solid currentColor; border-radius:10px; color:inherit; text-decoration:none; white-space:normal; overflow-wrap:anywhere; line-height:1.4; }
+#commonShareFallback { box-sizing:border-box; width:min(92vw,32rem); max-height:85dvh; overflow:auto; border:1px solid #777; border-radius:12px; padding:20px; background:#fff; color:#111; }
+#commonShareFallback::backdrop { background:#0009; }
+#commonShareFallback textarea { box-sizing:border-box; width:100%; min-height:160px; padding:10px; font:16px/1.5 sans-serif; color:#111; background:#fff; user-select:text; -webkit-user-select:text; }
+#commonShareFallback button { min-height:44px; margin:6px; padding:10px 16px; white-space:normal; color:#fff; background:#222; }
+</style>
+<dialog id="commonShareFallback" aria-labelledby="commonShareHeading">
+  <h2 id="commonShareHeading">共有文をコピー</h2>
+  <p>Xを開けない場合は、本文とURLをコピーして投稿できます。</p>
+  <textarea id="commonShareText" readonly aria-label="共有する本文とURL"></textarea>
+  <p id="commonShareStatus" role="status" aria-live="polite"></p>
+  <button id="commonShareCopy" type="button">コピー</button>
+  <button id="commonShareClose" type="button">閉じる</button>
+</dialog>
+<script>
+(() => {
+  'use strict';
+  const dialog = document.getElementById('commonShareFallback');
+  const field = document.getElementById('commonShareText');
+  const status = document.getElementById('commonShareStatus');
+  window.openGameShareX = (text) => {
+    const body = String(text);
+    const intent = new URL('https://x.com/intent/post');
+    intent.searchParams.set('text', body);
+    let popup;
+    try {
+      popup = window.open('', '_blank');
+      if (popup) {
+        popup.opener = null;
+        popup.location.replace(intent.href);
+        return;
+      }
+    } catch (_) {
+      try { if (popup) popup.close(); } catch (_) {}
+    }
+    field.value = body;
+    status.textContent = '';
+    if (!dialog.open) dialog.showModal();
+    field.focus();
+    field.select();
+  };
+  document.getElementById('commonShareCopy').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(field.value);
+      status.textContent = 'コピーしました。投稿はXで確認してください。';
+    } catch (_) {
+      field.focus();
+      field.select();
+      status.textContent = '本文を選択して手動でコピーしてください。';
+    }
+  });
+  document.getElementById('commonShareClose').addEventListener('click', () => dialog.close());
+})();
+</script>
+
 <script>
 'use strict';
 const DEBUG=false,GAME_SLUG='uchikaeru',PUBLIC_URL='https://chameleonjp.codeberg.page/uchikaeru/',MAX_WAVE=60,BASE_MAX_HP=25,MAX_ENEMIES=80,MAX_BULLETS=120,MAX_EFFECTS=120,MAX_WEAPONS=6,CARD_CHOICES_COUNT=3,RANK_BASE=2000000,PG_INTEGER_MAX=2147483647,FROG_HP_MULTIPLIER=3.5,RANGE_MULTIPLIER=1.4,BASE_HP_CAP=BASE_MAX_HP+15,MAX_PARTICLES=220,GLOBAL_DAMAGE_CAP=3.0,GLOBAL_RATE_CAP=2.5,GLOBAL_SLOW_CAP=0.28,GLOBAL_LEVEL_EPS=0.000001;
@@ -75,14 +132,14 @@ function clearCombatDamageTextEffects(){const r=state.run;if(!r)return;r.effects
 function pushEffect(x,y,kind,text){const a=state.run.effects;if(a.length>=MAX_EFFECTS)a.shift();a.push({x,y,kind,text,size:typeof text==='number'?text:30,life:650,max:650})}
 function updateHud(force){const r=state.run;if(!r)return;if(force||state.ui.wave!==r.wave){waveHud.textContent='波 '+Math.max(1,r.wave)+'/'+MAX_WAVE;state.ui.wave=r.wave}if(force||state.ui.hp!==r.baseHp){const hp=Math.max(0,Math.ceil(r.baseHp)),hr=Math.max(0,r.baseHp)/BASE_HP_CAP;hpHud.textContent='拠点 '+hp+'/'+BASE_HP_CAP;hpHud.style.color=hr>.5?'#9cff9e':hr>.25?'#ffd766':'#ff6b6b';hpHud.style.background=hr<=.25?'rgba(255,80,80,.2)':'';state.ui.hp=r.baseHp}const s=Math.floor(r.battleScore);if(force||state.ui.score!==s){scoreHud.textContent=s.toLocaleString()+'点';state.ui.score=s}if(DEBUG)debug.textContent=`fps:${state.fps} state:${state.current} w:${r.wave} e:${r.enemies.length} b:${r.bullets.length} fx:${r.effects.length} hp:${r.baseHp} rank:${r.rankingStatus} logical:${state.logicalWidth}x${state.logicalHeight} rect:${state.canvasRect.width.toFixed(1)}x${state.canvasRect.height.toFixed(1)}`}
 function updateStatus(t,level){statusText.textContent=t;state.ui.status=t;statusText.classList.remove('alert','good');if(level==='alert')statusText.classList.add('alert');else if(level==='good')statusText.classList.add('good')}function sanitizeSelectedWeapons(){const r=state.run;if(!r)return;r.selectedWeapons=r.selectedWeapons.filter(id=>{const def=WEAPON_BY_ID[id];return def&&def.category!=='support'})}function updateWeaponList(){weaponList.innerHTML='';const r=state.run;if(!r)return;sanitizeSelectedWeapons();r.selectedWeapons.slice(0,6).forEach(id=>{const w=WEAPON_BY_ID[id];if(!w)return;const c=document.createElement('div');c.className='chip';c.textContent=w.emoji+' Lv'+(r.weaponLevels[id]||1);const col=PARTICLE_COLORS[w.category]||'rgba(120,240,138,.2)';c.style.borderColor=col;c.style.background='color-mix(in srgb, '+col+' 14%, rgba(7,24,14,.82))';weaponList.appendChild(c)});const boosts=[{lv:Math.round((r.global.damage-1+GLOBAL_LEVEL_EPS)/.09),max:Math.ceil((GLOBAL_DAMAGE_CAP-1)/.09),text:'🔥火力',col:'#ff8f66'},{lv:Math.round((r.global.rate-1+GLOBAL_LEVEL_EPS)/.08),max:Math.ceil((GLOBAL_RATE_CAP-1)/.08),text:'🥁速度',col:'#ffd766'},{lv:Math.round((r.global.slowAura+GLOBAL_LEVEL_EPS)/.035),max:Math.ceil(GLOBAL_SLOW_CAP/.035),text:'🧊鈍足',col:'#8fd8ff'}];for(const b of boosts){if(b.lv<=0)continue;const c=document.createElement('div');c.className='chip';c.textContent=b.text+' Lv'+b.lv+'/'+b.max;c.style.borderColor=b.col;c.style.background='color-mix(in srgb, '+b.col+' 14%, rgba(7,24,14,.82))';weaponList.appendChild(c)}}
-function showResult(){const r=state.run;resultTitle.textContent=r.victory?'60波クリア！':r.retired?'リタイア':'結果';resultScore.textContent=formatResultScore(r);rankingStatus.textContent='ランキング送信中...';if(resendBtn)resendBtn.style.display='none';ranking.innerHTML='<h3>ランキング TOP10</h3><p class="small">ランキング取得中...</p>';}
+function showResult(){const r=state.run;resultTitle.textContent=r.victory?'60波クリア！':r.retired?'リタイア':'結果';resultScore.textContent=formatResultScore(r);rankingStatus.textContent='ランキング送信中...';if(resendBtn)resendBtn.style.display='none';ranking.innerHTML='<h3>ランキング 上位30名</h3><p class="small">ランキング取得中...</p>';}
 async function submitRankingOnce(){const r=state.run;if(r.rankingSubmitted)return;r.rankingSubmitted=true;const maxRankingScore=MAX_WAVE*RANK_BASE+(RANK_BASE-1),payload={p_display_name:state.playerName,p_game_slug:GAME_SLUG,p_score:Math.min(maxRankingScore,PG_INTEGER_MAX,Math.max(0,Math.floor(Number(r.rankingScore)||0))),p_client_version:CLIENT_VERSION};try{await supabaseRpc('submit_score',payload);r.rankingStatus='sent';rankingStatus.textContent='ランキング送信完了';}catch(e){r.rankingStatus='failed';rankingStatus.textContent='ランキング送信に失敗しました。下のボタンで再送信できます。';if(resendBtn)resendBtn.style.display='';if(DEBUG){const info={rpc:'submit_score',status:e.status||'unknown',body:String(e.body||e.message||'').slice(0,200),game_slug:GAME_SLUG,score:payload.p_score,playerNamePresent:!!state.playerName};console.warn('ranking submit failed',info);debug.textContent+='\nrankErr:'+JSON.stringify(info)}}}
-async function fetchRanking(){return await supabaseRpc('get_best_score_ranking',{p_game_slug:GAME_SLUG,p_limit:10})}
-function renderRanking(rows=[],failed=false){ranking.innerHTML='<h3>ランキング TOP10</h3>';if(failed){ranking.innerHTML+='<p class="small">ランキングを取得できませんでした。</p>';return}if(!rows||!rows.length){ranking.innerHTML+='<p class="small">まだ記録がありません。</p>';return}const medals=['🥇','🥈','🥉'];rows.slice(0,10).forEach((row,i)=>{const div=document.createElement('div');const rank=row.rank_no??(i+1),nm=row.display_name||row.name||'ななし',sc=Number(row.score??row.best_score??0);let cls='rank-row';if(rank>=1&&rank<=3)cls+=' top'+rank;if(state.playerName&&nm===state.playerName)cls+=' me';div.className=cls;const badge=(rank>=1&&rank<=3)?medals[rank-1]:rank+'位';div.innerHTML='<b>'+esc(String(badge))+'</b><span>'+esc(nm)+'</span><span>'+formatScore(sc)+'</span>';ranking.appendChild(div)})}
+async function fetchRanking(){return await supabaseRpc('get_best_score_ranking',{p_game_slug:GAME_SLUG,p_limit:30})}
+function renderRanking(rows=[],failed=false){ranking.innerHTML='<h3>ランキング 上位30名</h3>';if(failed){ranking.innerHTML+='<p class="small">ランキングを取得できませんでした。</p>';return}if(!rows||!rows.length){ranking.innerHTML+='<p class="small">まだ記録がありません。</p>';return}const medals=['🥇','🥈','🥉'];rows.slice(0,30).forEach((row,i)=>{const div=document.createElement('div');const rank=row.rank_no??(i+1),nm=row.display_name||row.name||'ななし',sc=Number(row.score??row.best_score??0);let cls='rank-row';if(rank>=1&&rank<=3)cls+=' top'+rank;if(state.playerName&&nm===state.playerName)cls+=' me';div.className=cls;const badge=(rank>=1&&rank<=3)?medals[rank-1]:rank+'位';div.innerHTML='<b>'+esc(String(badge))+'</b><span>'+esc(nm)+'</span><span>'+formatScore(sc)+'</span>';ranking.appendChild(div)})}
 async function supabaseRpc(fn,body){const ctrl=new AbortController(),tid=setTimeout(()=>ctrl.abort(),8000);try{const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body),signal:ctrl.signal});const text=await res.text();if(!res.ok){const err=new Error('rpc failed');err.status=res.status;err.body=text;err.rpc=fn;throw err}return text?JSON.parse(text):null}finally{clearTimeout(tid)}}
 function formatResultScore(r){const wave=Math.max(0,Math.floor(Number(r?.clearWave)||0)),detailScore=Math.max(0,Math.floor(Number(r?.detailScore??r?.battleScore)||0));return wave+'波クリア / '+detailScore.toLocaleString('ja-JP')+'点'}
 function formatScore(v){const raw=Math.max(0,Math.floor(Number(v)||0)),wave=Math.floor(raw/RANK_BASE),score=raw%RANK_BASE;return wave+'波クリア / '+score.toLocaleString('ja-JP')+'点'}
-function shareText(resultMode){const text=resultMode?'うちかえる\n'+formatResultScore(state.run)+'\n迫るカエルの大群を撃ち返した！\n'+PUBLIC_URL:'うちかえる\n迫るカエルの大群を撃ち返し、ランダム武器を選びながら60波突破を目指す防衛ゲームです。\n'+PUBLIC_URL;if(navigator.share){navigator.share({text}).catch(()=>{})}else if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>showToast('コピーしました')).catch(()=>showToast('コピーできませんでした'))}else{showToast('共有に対応していません')}}
+function shareText(resultMode){const text=resultMode?'うちかえる\n'+formatResultScore(state.run)+'\n'+PUBLIC_URL:'うちかえる\n武器と強化を選び、カエルの大群から拠点を守る60波の防衛ゲーム。\n'+PUBLIC_URL;window.openGameShareX(text)}
 function resizeCanvas(){const dpr=Math.min(window.devicePixelRatio||1,2),rect=gameCanvas.getBoundingClientRect(),logicalWidth=Math.max(300,rect.width),logicalHeight=Math.max(320,rect.height),pixelWidth=Math.round(logicalWidth*dpr),pixelHeight=Math.round(logicalHeight*dpr);state.dpr=dpr;state.logicalWidth=logicalWidth;state.logicalHeight=logicalHeight;state.canvasRect={width:rect.width,height:rect.height};if(gameCanvas.width!==pixelWidth)gameCanvas.width=pixelWidth;if(gameCanvas.height!==pixelHeight)gameCanvas.height=pixelHeight}
 function drawDebugOverlay(cw,ch,layout){if(!DEBUG||!state.run)return;ctx.save();ctx.lineWidth=1;ctx.strokeStyle='rgba(255,0,0,.95)';ctx.beginPath();ctx.moveTo(0,layout.defenseLineY+.5);ctx.lineTo(cw,layout.defenseLineY+.5);ctx.stroke();ctx.strokeStyle='rgba(255,255,255,.7)';ctx.beginPath();ctx.moveTo(0,layout.baseY+.5);ctx.lineTo(cw,layout.baseY+.5);ctx.stroke();ctx.fillStyle='rgba(255,255,255,.95)';ctx.font='10px monospace';ctx.textAlign='left';ctx.fillText('baseY '+layout.baseY.toFixed(1),6,layout.baseY-4);ctx.fillText('logical '+cw.toFixed(1)+'x'+ch.toFixed(1),6,14);ctx.fillText('rect '+state.canvasRect.width.toFixed(1)+'x'+state.canvasRect.height.toFixed(1),6,28);for(const e of state.run.enemies){ctx.strokeStyle='rgba(255,120,0,.9)';ctx.beginPath();ctx.moveTo(e.x-e.r,e.y+e.r);ctx.lineTo(e.x+e.r,e.y+e.r);ctx.stroke()}const total=state.run.selectedWeapons.length;for(let i=0;i<total;i++){const p=getWeaponSlotPosition(i,total,layout);ctx.fillStyle='#00e5ff';ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill()}for(const b of state.run.bullets){ctx.fillStyle='#ff40ff';ctx.beginPath();ctx.arc(b.spawnX??b.x,b.spawnY??b.y,2.5,0,Math.PI*2);ctx.fill()}ctx.restore()}
 function loop(t){try{const dt=Math.min(33,t-(state.lastTime||t));state.lastTime=t;state.frameCount++;state.fpsTime+=dt;if(state.fpsTime>500){state.fps=Math.round(state.frameCount*1000/state.fpsTime);state.frameCount=0;state.fpsTime=0}if(!state.paused&&(state.current==='PLAYING'||state.current==='CHOOSING'||state.current==='READY')){const steps=state.speed||1;for(let s=0;s<steps;s++)update(dt);draw()}}catch(e){if(DEBUG)console.error(e)}finally{requestAnimationFrame(loop)}}
