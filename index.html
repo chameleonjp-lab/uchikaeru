@@ -323,7 +323,7 @@ function beep(freq,dur,type,vol){
   if(now-(lastAudioByType.get(freq)??-Infinity)<60||(!priority&&now-lastPriorityAudio<100))return;
   lastAudioByType.set(freq,now);if(priority){lastPriorityAudio=now;stopAudio()}
   if(activeVoices.size>=12)return;
-  try{const osc=state.audio.createOscillator(),gain=state.audio.createGain(),voice={osc,cleanup(){activeVoices.delete(voice);try{osc.disconnect();gain.disconnect()}catch{}}};osc.type=type;osc.frequency.value=freq;gain.gain.value=Math.max(.0001,vol*soundVolume);osc.connect(gain);gain.connect(state.audio.destination);activeVoices.add(voice);osc.onended=()=>voice.cleanup();osc.start();gain.gain.exponentialRampToValueAtTime(.0001,state.audio.currentTime+dur);osc.stop(state.audio.currentTime+dur)}catch{}
+  try{const osc=state.audio.createOscillator(),gain=state.audio.createGain(),voice={osc,cleanup(){activeVoices.delete(voice);try{osc.disconnect();gain.disconnect()}catch{}}};osc.type=type;osc.frequency.value=freq;gain.gain.value=Math.max(.0001,vol*soundVolume);osc.connect(gain);gain.connect(state.audio.destination);activeVoices.add(voice);osc.onended=()=>voice.cleanup();osc.start();gain.gain.exponentialRampToValueAtTime(.0001,state.audio.currentTime+dur);osc.stop(state.audio.currentTime+dur)}catch{stopAudio()}
 }
 function showToast(message){toast.textContent=message;toast.classList.add('show');clearTimeout(state.toastTimer);state.toastTimer=setTimeout(()=>toast.classList.remove('show'),1800)}
 function saveName(){try{localStorage.setItem('uchikaeruName',nameInput.value.trim())}catch{}}
