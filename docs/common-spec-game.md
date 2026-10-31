@@ -57,7 +57,7 @@
 
 ## 検証とマージ手順
 
-ローカルで `python scripts/build-locales.py --check`、`node --test scripts/*.test.*`（23項目）、`python scripts/test-pages.py`（公開境界6項目）、`python scripts/prepare-pages.py`、`git diff --check` を実行する。インラインJSON/queueと原本一致も確認する。配信物は既存どおりindex.html単体とbuild-info/.nojekyllだけ。PlaywrightはCI検証用で公開物へ含めない。
+ローカルで `python scripts/build-locales.py --check`、`node --test scripts/*.test.*`（24項目）、`python scripts/test-pages.py`（公開境界6項目）、`python scripts/prepare-pages.py`、`git diff --check` を実行する。インラインJSON/queueと原本一致も確認する。配信物は既存どおりindex.html単体とbuild-info/.nojekyllだけ。PlaywrightはCI検証用で公開物へ含めない。
 
 `node scripts/browser-smoke.cjs` はSupabase全通信を模擬し、全15言語のホーム/説明/カード/結果/共有、402×874と874×402、空白ゲストの初回3択→実際の第1波→リタイア、IME、開始名固定、模擬60波の実点数/圧縮値、ACK紛失とreload同UUID、30名/同名/安全な表示、遅い旧応答/形式不正/失敗/空、古いカウントダウン、保存off/0を確認する。本番への検証点数送信は0件。
 
@@ -71,3 +71,7 @@
 復旧はrevert PRを同じ検証で公開する。旧run再実行で最新を上書きせず、DBの既存スコア・名前キー・未送信記録を削除しない。SQL撤回時は依存ゲームを先に戻し、未送信UUIDは保管する。登録URLは今回未変更。
 
 独立レビュー追補: 音の開始が例外になる場合も保持ノードを停止・切断するよう修正し、例外の回帰テストを追加。
+
+ACK検証追補: accepted=falseの明示的な拒否のみ再送対象外とする。null/空配列/欠落/文字列等の不正ACKは送信待ちへ戻し、reload後も同じUUIDで再試行する回帰テストを追加。
+
+操作競合の修正: 画面遷移後の遅いrAF見出しフォーカスが、利用者の名前欄編集からフォーカスを奪う場合があった。見出しフォーカスを遷移中に同期実行し、編集開始後に奪わないことをブラウザで回帰確認。
