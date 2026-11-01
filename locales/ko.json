@@ -149,5 +149,6 @@
   "weapon_support_1": "화력 깃발",
   "weapon_support_2": "속사 북",
   "weapon_support_3": "둔화 부적",
-  "weapon_support_4": "행운의 새싹"
+  "weapon_support_4": "행운의 새싹",
+  "storageWarning": "이 기기에 기록을 저장할 수 없습니다. 결과를 잃지 않도록 새로고침하지 말고, 저장할 수 있을 때 다시 시도하세요."
 }

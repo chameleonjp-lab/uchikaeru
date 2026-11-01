@@ -149,5 +149,6 @@
   "weapon_support_1": "Panji daya serang",
   "weapon_support_2": "Genderang tembak cepat",
   "weapon_support_3": "Jimat perlambatan",
-  "weapon_support_4": "Tunas keberuntungan"
+  "weapon_support_4": "Tunas keberuntungan",
+  "storageWarning": "Perangkat ini tidak dapat menyimpan catatan. Agar hasil tidak hilang, jangan muat ulang halaman; coba lagi saat penyimpanan tersedia."
 }

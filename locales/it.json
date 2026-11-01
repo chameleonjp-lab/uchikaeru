@@ -149,5 +149,6 @@
   "weapon_support_1": "Stendardo dei danni",
   "weapon_support_2": "Tamburo a tiro rapido",
   "weapon_support_3": "Amuleto del rallentamento",
-  "weapon_support_4": "Germoglio fortunato"
+  "weapon_support_4": "Germoglio fortunato",
+  "storageWarning": "Questo dispositivo non può salvare il record. Per non perdere il risultato, non ricaricare la pagina; riprova quando sarà possibile salvare."
 }

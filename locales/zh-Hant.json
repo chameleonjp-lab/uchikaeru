@@ -149,5 +149,6 @@
   "weapon_support_1": "火力旗",
   "weapon_support_2": "快射鼓",
   "weapon_support_3": "減速護符",
-  "weapon_support_4": "幸運嫩芽"
+  "weapon_support_4": "幸運嫩芽",
+  "storageWarning": "此裝置無法儲存紀錄。為避免遺失結果，請勿重新載入頁面，待可儲存時重試。"
 }

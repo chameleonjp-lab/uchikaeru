@@ -22,8 +22,11 @@ jobs:
       - run: python scripts/build-locales.py --check
       - run: node --test scripts/*.test.*
       - run: npm install --no-save --package-lock=false --ignore-scripts playwright@1.62.1
-      - run: npx --no-install playwright install --with-deps chromium
+      - run: npx --no-install playwright install --with-deps chromium webkit
       - run: node scripts/browser-smoke.cjs
+      - run: node scripts/browser-smoke.cjs
+        env:
+          BROWSER_ENGINE: webkit
       - run: python scripts/test-pages.py
       - run: python scripts/prepare-pages.py
       - uses: actions/upload-pages-artifact@v3
@@ -53,3 +56,4 @@ jobs:
       - name: Deploy the validated artifact from this run
         id: deployment
         uses: actions/deploy-pages@v4
+

@@ -149,5 +149,6 @@
   "weapon_support_1": "Cờ tăng sát thương",
   "weapon_support_2": "Trống bắn nhanh",
   "weapon_support_3": "Bùa làm chậm",
-  "weapon_support_4": "Mầm may mắn"
+  "weapon_support_4": "Mầm may mắn",
+  "storageWarning": "Thiết bị này không thể lưu bản ghi. Để không mất kết quả, đừng tải lại trang; hãy thử lại khi có thể lưu."
 }

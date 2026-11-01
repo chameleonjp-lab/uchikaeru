@@ -80,9 +80,10 @@ def validate_and_stage():
         dest.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(ROOT / name,dest)
     (OUT / '.nojekyll').write_text('')
-    sha = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    sha = subprocess.check_output(['git','-c',f'safe.directory={ROOT.resolve()}','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     (OUT / 'build-info.json').write_text(json.dumps({'commit':sha,'files':{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in files}},indent=2)+'\n')
     print(f'Validated and staged {len(files)} runtime files at {sha}')
 
 if __name__ == '__main__':
     validate_and_stage()
+
