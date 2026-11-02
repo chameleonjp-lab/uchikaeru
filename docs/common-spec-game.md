@@ -94,3 +94,6 @@ ACK検証追補: accepted=falseの明示的な拒否のみ再送対象外とす�
 独立レビュー追補: ゲスト/送信済みの結果snapshot保存失敗も別状態で検出し、保存原文読み戻し一致まで警告。再送ボタンで保存を再試行でき、guestなら公開登録しない。
 
 ブラウザ後続検証: 同じPlaywright 1.62.1・同じ全通信mockシナリオをChromiumとWebKitで実行するよう既存検証jobへ追加。WebKitはiPhone Safari実機ではない。公開job条件/Source確認/現行main SHA gateは変更しない。
+
+## 2026-11-02 09:40 JST 受領境界の後続修正
+normal RPCのfirst/best/countをSQL integer範囲、countを正数に検証し、うちかえるの降順で今回提出点より小さいbestを拒否します。異常ACKはpendingのまま再読込後も同UUID/内容で再送。first0や合法な過去負数を維持し、現在game上限を過去履歴へ遡及しません。inline実装とunitコピーの一致、実callerのdescを追加15回帰で確認。新headのCI結果はPR本文へ記録します。DB/公開/採点/名前・ID変更なし、identity/実機等の残件は維持。
